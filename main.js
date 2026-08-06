@@ -13,16 +13,25 @@ const closeHelp = document.getElementById("closeHelp");
 const fingerDisplayEl = document.getElementById("fingerDisplay");
 
 // ---- Finger landmark indices ----
-const FINGERS = {
-  index:  { pip: 6, tip: 8 },
-  middle: { pip: 10, tip: 12 },
-  ring:   { pip: 14, tip: 16 },
-  pinky:  { pip: 18, tip: 20 },
-};
+// ---- True Distance/Touch Collision ----
+function getDistance(p1, p2) {
+  const dx = p1.x - p2.x;
+  const dy = p1.y - p2.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
 
-function isFingerExtended(landmarks, name) {
-  const { pip, tip } = FINGERS[name];
-  return landmarks[tip].y < landmarks[pip].y;
+// Checks if the distance between two specific dots is close enough to be a "bend/touch"
+function isTouching(landmarks, dot1, dot2) {
+  const p1 = landmarks[dot1];
+  const p2 = landmarks[dot2];
+  
+  if (!p1 || !p2) return false;
+
+  const distance = getDistance(p1, p2);
+  
+  // TWEAK THIS NUMBER: 0.06 is the default sensitivity. 
+  // Change to 0.08 for a lighter bend, or 0.03 for a very tight squeeze.
+  return distance < 0.06; 
 }
 
 function isThumbExtended(landmarks, handedness) {
@@ -227,11 +236,10 @@ async function main() {
 
           // Evaluate and trigger audio for each finger (INVERTED LOGIC)
           audioEngine.updateFingerState("thumb", !isThumbExtended(hand, handedness));
-          audioEngine.updateFingerState("index", !isFingerExtended(hand, "index"));
-          audioEngine.updateFingerState("middle", !isFingerExtended(hand, "middle"));
-          audioEngine.updateFingerState("ring", !isFingerExtended(hand, "ring"));
-          audioEngine.updateFingerState("pinky", !isFingerExtended(hand, "pinky"));
-
+          audioEngine.updateFingerState("index", isTouching(hand, 8, 6));   // Index Tip (8) to 2nd Joint (6)
+          audioEngine.updateFingerState("middle", isTouching(hand, 12, 10)); // Middle Tip (12) to 2nd Joint (10)
+          audioEngine.updateFingerState("ring", isTouching(hand, 16, 14));  // Ring Tip (16) to 2nd Joint (14)
+          audioEngine.updateFingerState("pinky", isTouching(hand, 20, 18)); // Pinky Tip (20) to 2nd Joint (18)
           // Update UI
           const activeList = audioEngine.getActiveFingers();
           fingerDisplayEl.textContent = activeList.length > 0 ? activeList.join(" | ") : "--";
