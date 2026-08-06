@@ -43,11 +43,11 @@ class MultiTriggerEngine {
     // Map your .mp3 file paths here. 
     // These paths assume you placed them in a "public/sounds/" folder.
     this.voices = {
-      thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, name: "Thumb" },
-      index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, name: "Index" },
-      middle: { file: "/sounds/middle.wav", buffer: null, source: null, active: false, name: "Middle" },
-      ring:   { file: "/sounds/ring.wav", buffer: null, source: null, active: false, name: "Ring" },
-      pinky:  { file: "/sounds/pinky.wav", buffer: null, source: null, active: false, name: "Pinky" }
+      thumb:  { file: "/public/sounds/thumb.wav", buffer: null, source: null, active: false, name: "Thumb" },
+      index:  { file: "/public/sounds/index.wav", buffer: null, source: null, active: false, name: "Index" },
+      middle: { file: "/public/sounds/middle.wav", buffer: null, source: null, active: false, name: "Middle" },
+      ring:   { file: "/public/sounds/ring.wav", buffer: null, source: null, active: false, name: "Ring" },
+      pinky:  { file: "/public/sounds/pinky.wav", buffer: null, source: null, active: false, name: "Pinky" }
     };
   }
 
