@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Gesture Synth</title>
+<style>
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #111;
+  overflow: hidden;
+}
+#stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+}
+#webcam {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  z-index: -1;
+}
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#helpButton {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #e8a13d00;
+  background: rgba(20,20,20,0.85);
+  color: #e8a13d;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 6;
+}
+
+#helpModal.hidden {
+  display: none;
+}
+
+#helpModal {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.help-content {
+  background: #1a1a1a;
+  color: white;
+  border: 1px solid #e8a13d;
+  border-radius: 10px;
+  width: min(500px, 90vw);
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px;
+  font-family: monospace;
+}
+
+#closeHelp {
+  float: right;
+  background: none;
+  border: none;
+  color: #e8a13d;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.help-content h2,
+.help-content h3 {
+  color: #e8a13d;
+}
+
+.help-content a {
+  color: #e8a13d;
+  text-decoration: none;
+}
+
+.help-content a:hover {
+  color: #ffbf5c;
+}
+#keySelect {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #1a1a1a;
+  color: #e8a13d;
+  border: 1px solid #3a3428;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 4px 8px;
+  z-index: 5;
+}
+#toneSelect {
+  position: absolute;
+  top: 48px;
+  left: 12px;
+  background: #1a1a1a;
+  color: #e8a13d;
+  border: 1px solid #3a3428;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 4px 8px;
+  z-index: 5;
+}
+#chordDisplay {
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #e8a13d;
+  font-size: 12px;
+  font-family: monospace;
+  font-weight: bold;
+  text-shadow: 0 0 12px rgba(232, 161, 61, 0.6);
+  pointer-events: none;
+}
+#volumeMeter {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 3px;
+  pointer-events: none;
+}
+.vol-bar {
+  width: 70px;
+  height: 8px;
+  background: #3a3428;
+  border-radius: 2px;
+}
+.vol-bar.lit {
+  background: #e8a13d;
+}
+/* Add this style rule inside your <style> section */
+#distortionDisplay {
+  position: absolute;
+  top: 105px; /* Sits perfectly below your 8 volume bars */
+  right: 12px;
+  color: #e8a13d;
+  font-family: monospace;
+  font-size: 14px;
+  text-align: right;
+  pointer-events: none;
+}
+#qualityDisplay {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #e8a13d;
+  font-size: 12px;
+  font-family: monospace;
+  pointer-events: none;
+}
+#startOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* FIXED: Push content to the bottom third of the screen */
+  justify-content: flex-end; 
+  /* FIXED: Pad the bottom by 15% of the screen height to position it vertically */
+  padding-bottom: 15vh; 
+  gap: 16px;
+  cursor: pointer;
+  z-index: 10;
+  box-sizing: border-box; /* Ensures the padding calculation doesn't stretch the container */
+}
+
+.start-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #111;
+}
+
+.start-text {
+  color: #fff;
+  font-family: monospace;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+}
+
+#overlay.dimmed {
+  filter: grayscale(1) brightness(0.6);
+}
+</style>
+  <script type="module" crossorigin src="/assets/index-BE1DV7i0.js"></script>
+</head>
+<body>
+<div id="stage">
+  <video id="webcam" autoplay playsinline muted></video>
+  <canvas id="overlay" class="dimmed"></canvas>
+  
+  <!-- Replaced chord display with active finger display -->
+  
+  <button id="helpButton">?</button>
+
+  <div id="helpModal" class="hidden">
+    <div class="help-content">
+      <button id="closeHelp">✕</button>
+      <h2>Single-Hand Trigger Guide</h2>
+      <p>Hold up your hand to the camera.</p>
+      <p><b>Fingers (Custom Sounds)</b><br>
+      Thumb → Sound 1<br>
+      Index → Sound 2<br>
+      Middle → Sound 3<br>
+      Ring → Sound 4<br>
+      Pinky → Sound 5</p>
+      <p>Extend any combination of fingers to play multiple sounds at once!</p>
+    </div>
+  </div>
+
+  <div id="startOverlay">
+    <div class="start-circle">▶</div>
+    <div class="start-text">Click to enable audio</div>
+  </div>
+</div>
+</body>
+</html>
