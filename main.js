@@ -186,7 +186,14 @@ function drawFrame(results, canvasWidth, canvasHeight) {
 }
 
 async function setupCamera() {
-  const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+  const stream = await navigator.mediaDevices.getUserMedia({ 
+    video: { 
+      width: { ideal: 640 }, // FIX: "ideal" prevents crashes on weird phone screen sizes
+      height: { ideal: 480 },
+      facingMode: "user" // FIX: Forces the phone to use the front selfie camera
+    }, 
+    audio: false 
+  });
   videoEl.srcObject = stream;
   return new Promise((resolve) => {
     videoEl.onloadedmetadata = () => { videoEl.play(); resolve(); };
@@ -198,7 +205,7 @@ async function setupHandLandmarker() {
   return HandLandmarker.createFromOptions(vision, {
     baseOptions: {
       modelAssetPath: "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
-      delegate: "GPU",
+      delegate: "CPU",
     },
     runningMode: "VIDEO",
     numHands: 1, // Changed to 1 hand
