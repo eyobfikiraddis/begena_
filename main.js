@@ -11,8 +11,8 @@ const helpButton = document.getElementById("helpButton");
 const helpModal = document.getElementById("helpModal");
 const closeHelp = document.getElementById("closeHelp");
 const fingerDisplayEl = document.getElementById("fingerDisplay");
-
 // ---- Finger landmark indices ----
+
 // ---- True Distance/Touch Collision ----
 function getDistance(p1, p2) {
   const dx = p1.x - p2.x;
@@ -28,9 +28,8 @@ function isTouching(landmarks, dot1, dot2) {
   if (!p1 || !p2) return false;
 
   const distance = getDistance(p1, p2);
-  
-  // TWEAK THIS NUMBER: 0.06 is the default sensitivity. 
-  // Change to 0.08 for a lighter bend, or 0.03 for a very tight squeeze.
+   
+  //0.08 for a lighter bend and 0.03 for a very tight squeeze
   return distance < 0.06; 
 }
 
@@ -40,17 +39,12 @@ function isThumbExtended(landmarks, handedness) {
   return handedness === "Right" ? thumbTip.x > thumbIp.x : thumbTip.x < thumbIp.x;
 }
 
-// ---- Independent Audio Engine ----
-// Designed to trigger 5 separate non-blocking sounds
-// ---- Independent Audio Engine (.mp3 Version) ----
+
 class MultiTriggerEngine {
   constructor() {
     this.ctx = null;
     this.masterGain = null;
     this.isLoaded = false;
-    
-    // Map your .mp3 file paths here. 
-    // These paths assume you placed them in a "public/sounds/" folder.
     this.voices = {
       thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, name: "Thumb" },
       index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, name: "Index" },
@@ -130,7 +124,6 @@ class MultiTriggerEngine {
 
 const audioEngine = new MultiTriggerEngine();
 
-// Ensure the start button waits for the .mp3s to finish downloading and decoding
 startOverlayEl.addEventListener("click", async () => {
   const startText = startOverlayEl.querySelector(".start-text");
   if (startText) startText.textContent = "Loading sounds...";
@@ -188,9 +181,9 @@ function drawFrame(results, canvasWidth, canvasHeight) {
 async function setupCamera() {
   const stream = await navigator.mediaDevices.getUserMedia({ 
     video: { 
-      width: { ideal: 640 }, // FIX: "ideal" prevents crashes on weird phone screen sizes
+      width: { ideal: 640 }, 
       height: { ideal: 480 },
-      facingMode: "user" // FIX: Forces the phone to use the front selfie camera
+      facingMode: "user" //Forces the phone to use the front selfie camera
     }, 
     audio: false 
   });
@@ -208,7 +201,7 @@ async function setupHandLandmarker() {
       delegate: "CPU",
     },
     runningMode: "VIDEO",
-    numHands: 1, // Changed to 1 hand
+    numHands: 1,
   });
 }
 
@@ -241,13 +234,12 @@ async function main() {
           const hand = results.landmarks[0];
           const handedness = results.handedness[0][0].categoryName;
 
-          // Evaluate and trigger audio for each finger (INVERTED LOGIC)
           audioEngine.updateFingerState("thumb", !isThumbExtended(hand, handedness));
           audioEngine.updateFingerState("index", isTouching(hand, 8, 6));   // Index Tip (8) to 2nd Joint (6)
           audioEngine.updateFingerState("middle", isTouching(hand, 12, 10)); // Middle Tip (12) to 2nd Joint (10)
           audioEngine.updateFingerState("ring", isTouching(hand, 16, 14));  // Ring Tip (16) to 2nd Joint (14)
           audioEngine.updateFingerState("pinky", isTouching(hand, 20, 18)); // Pinky Tip (20) to 2nd Joint (18)
-          // Update UI
+          
           const activeList = audioEngine.getActiveFingers();
           fingerDisplayEl.textContent = activeList.length > 0 ? activeList.join(" | ") : "--";
         } else {
