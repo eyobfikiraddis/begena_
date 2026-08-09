@@ -45,12 +45,13 @@ class MultiTriggerEngine {
     this.ctx = null;
     this.masterGain = null;
     this.isLoaded = false;
+    
     this.voices = {
-      thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, name: "Thumb" },
-      index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, name: "Index" },
-      middle: { file: "/sounds/middle.wav", buffer: null, source: null, active: false, name: "Middle" },
-      ring:   { file: "/sounds/ring.wav", buffer: null, source: null, active: false, name: "Ring" },
-      pinky:  { file: "/sounds/pinky.wav", buffer: null, source: null, active: false, name: "Pinky" }
+      thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+      index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+      middle: { file: "/sounds/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+      ring:   { file: "/sounds/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+      pinky:  { file: "/sounds/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
     };
   }
 
@@ -85,33 +86,34 @@ class MultiTriggerEngine {
     if (!this.ctx || !this.isLoaded) return;
     const voice = this.voices[fingerKey];
     
-    // Skip if the audio file failed to load
     if (!voice.buffer) return; 
+    const COOLDOWN_MS = 250; 
+    const now = performance.now();
 
-    // TRIGGER EVENT: Finger is closed
     if (isTriggered && !voice.active) {
+      // Prevent playin if the cooldown hasn't finished yet
+      if (now - voice.lastTriggerTime < COOLDOWN_MS) return;
+
       voice.active = true;
+      voice.lastTriggerTime = now; 
       
       voice.source = this.ctx.createBufferSource();
       voice.source.buffer = voice.buffer;
-      
-      // CRITICAL: Set loop to false so it plays once and stops automatically
       voice.source.loop = false; 
       
       const gainNode = this.ctx.createGain();
       gainNode.gain.setValueAtTime(0, this.ctx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(1, this.ctx.currentTime + 0.05); // Quick fade-in
+      gainNode.gain.linearRampToValueAtTime(1, this.ctx.currentTime + 0.05); 
       
       voice.source.connect(gainNode);
       gainNode.connect(this.masterGain);
       voice.source.start();
       voice.gainNode = gainNode;
     } 
-    // RELEASE EVENT: Finger is extended again
     else if (!isTriggered && voice.active) {
-      // Reset the active state so the sound can be triggered again next time,
-      // but DO NOT stop the audio source. Let it finish playing naturally!
-      voice.active = false;
+      if (now - voice.lastTriggerTime > COOLDOWN_MS) {
+        voice.active = false;
+      }
     }
   }
 
