@@ -11,7 +11,7 @@ const helpButton = document.getElementById("helpButton");
 const helpModal = document.getElementById("helpModal");
 const closeHelp = document.getElementById("closeHelp");
 const fingerDisplayEl = document.getElementById("fingerDisplay");
-// ---- Finger landmark indices ----
+const kgntType = document.getElementById("kgntType");
 
 // ---- True Distance/Touch Collision ----
 function getDistance(p1, p2) {
@@ -35,8 +35,11 @@ function isTouching(landmarks, dot1, dot2) {
 
 function isThumbExtended(landmarks, handedness) {
   const thumbTip = landmarks[4];
-  const thumbIp = landmarks[3];
-  return handedness === "Right" ? thumbTip.x > thumbIp.x : thumbTip.x < thumbIp.x;
+  const pinkyBase = landmarks[17];
+  
+  if (!thumbTip || !pinkyBase) return false;
+  const distance = getDistance(thumbTip, pinkyBase);
+  return distance > 0.12; 
 }
 
 
@@ -45,14 +48,15 @@ class MultiTriggerEngine {
     this.ctx = null;
     this.masterGain = null;
     this.isLoaded = false;
-    
+    const kgnt = kgntType.value;
+    if (kgnt === "silecherinetih") {
     this.voices = {
       thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
       index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
       middle: { file: "/sounds/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
       ring:   { file: "/sounds/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
       pinky:  { file: "/sounds/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
-    };
+    };}
   }
 
   async ensureContext() {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Gesture Synth</title>
+<title>Begena</title>
 <style>
 html, body {
   margin: 0;
@@ -211,30 +211,68 @@ html, body {
 #overlay.dimmed {
   filter: grayscale(1) brightness(0.6);
 }
+
+
+/*for the drop down menu*/
+.custom-select-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 20px; /* Sits cleanly in the top left corner */
+  z-index: 10;
+}
+.Dropdown {
+  appearance: none;
+  background: rgba(20, 20, 20, 0.75); 
+  color: #e8a13d; 
+  border: 1px solid #e8a13d;
+  border-radius: 8px;
+  padding: 10px 40px 10px 16px;
+  font-size: 16px;
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease-in-out;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+.Dropdown:hover, .Dropdown:focus {
+  background: rgba(40, 40, 40, 0.9);
+  box-shadow: 0 0 30px rgba(232, 161, 61, 0.4);
+}
 </style>
-  <script type="module" crossorigin src="/assets/index-BE1DV7i0.js"></script>
+  <script type="module" crossorigin src="/assets/index-CJ-VOBgY.js"></script>
 </head>
 <body>
 <div id="stage">
   <video id="webcam" autoplay playsinline muted></video>
   <canvas id="overlay" class="dimmed"></canvas>
-  
-  <!-- Replaced chord display with active finger display -->
-  
-  <button id="helpButton">?</button>
 
+  <div class="custom-select-wrapper">
+    <select id="kgntType" class="Dropdown">
+      <option value="silecherinetih">ስለቸርነትህ</option>
+      <option value="tezeta">ትዝታ</option>
+      <option value="selamta">ሰላምታ</option>
+      <option value="ambassel">አምባሰል</option>
+    </select>
+  </div>
+  
+ <button id="helpButton">?</button>
   <div id="helpModal" class="hidden">
     <div class="help-content">
       <button id="closeHelp">✕</button>
-      <h2>Single-Hand Trigger Guide</h2>
+      <h2>Begena Guide</h2>
       <p>Hold up your hand to the camera.</p>
-      <p><b>Fingers (Custom Sounds)</b><br>
-      Thumb → Sound 1<br>
-      Index → Sound 2<br>
-      Middle → Sound 3<br>
-      Ring → Sound 4<br>
-      Pinky → Sound 5</p>
-      <p>Extend any combination of fingers to play multiple sounds at once!</p>
+      <p><b>Currently only supports ስለቸርነትህ ቅኝት</b><br>
+      Thumb → 1<br>
+      Index → 2<br>
+      Middle → 3<br>
+      Ring → 4<br>
+      Pinky → 5</p>
+      <p> don't go fast its not that perfect</p>
     </div>
   </div>
 
