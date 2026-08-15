@@ -48,7 +48,7 @@ class MultiTriggerEngine {
     this.ctx = null;
     this.masterGain = null;
     this.isLoaded = false;
-    this.voices = {}; 
+     
     this.loadKit(kgntType.value);
 
     kgntType.addEventListener("change", async (e) => {
@@ -78,6 +78,9 @@ class MultiTriggerEngine {
         ring:   { file: "/sounds/new_ring_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
         pinky:  { file: "/sounds/new_pinky_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
+    }
+    else{
+      this.voices = {};
     }
   }
 
