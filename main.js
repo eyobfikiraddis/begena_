@@ -285,7 +285,6 @@ async function main() {
       console.error("Frame skipped due to error:", error);
     }
 
-    // Placing this OUTSIDE the try/catch guarantees the camera will always keep ticking
     requestAnimationFrame(loop);
   }
   loop();
