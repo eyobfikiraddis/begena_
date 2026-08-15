@@ -63,20 +63,20 @@ class MultiTriggerEngine {
   loadKit(kitName) {
     if (kitName === "silecherinetih") {
       this.voices = {
-        thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
-        index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
-        middle: { file: "/sounds/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
-        ring:   { file: "/sounds/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
-        pinky:  { file: "/sounds/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+        thumb:  { file: "/sounds/silecherneth/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/silecherneth/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/silecherneth/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/silecherneth/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/silecherneth/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
     } 
     else if (kitName === "selamta") {
       this.voices = {
-        thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
-        index:  { file: "/sounds/new_index_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
-        middle: { file: "/sounds/new_middle_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
-        ring:   { file: "/sounds/new_ring_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
-        pinky:  { file: "/sounds/new_pinky_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+        thumb:  { file: "/sounds/selamta/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/selamta/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/selamta/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/selamta/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/selamta/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
     }
     else{
