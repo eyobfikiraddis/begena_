@@ -48,17 +48,40 @@ class MultiTriggerEngine {
     this.ctx = null;
     this.masterGain = null;
     this.isLoaded = false;
-    const kgnt = kgntType.value;
-    if (kgnt === "silecherinetih") {
-    this.voices = {
-      thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
-      index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
-      middle: { file: "/sounds/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
-      ring:   { file: "/sounds/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
-      pinky:  { file: "/sounds/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
-    };}
+    this.voices = {}; 
+    this.loadKit(kgntType.value);
+
+    kgntType.addEventListener("change", async (e) => {
+      this.loadKit(e.target.value);
+      if (this.ctx) {
+        this.isLoaded = false; 
+        await this.loadAllSounds(); 
+      }
+    });
   }
 
+  loadKit(kitName) {
+    if (kitName === "silecherinetih") {
+      this.voices = {
+        thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+      };
+    } 
+    else if (kitName === "selamta") {
+      this.voices = {
+        thumb:  { file: "/sounds/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/new_index_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/new_middle_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/new_ring_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/new_pinky_sound.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+      };
+    }
+  }
+
+ 
   async ensureContext() {
     if (this.ctx) return;
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
