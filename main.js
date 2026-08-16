@@ -65,9 +65,9 @@ class MultiTriggerEngine {
       this.voices = {
         thumb:  { file: "/sounds/G.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
         index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
-        middle: { file: "/sounds/D#.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        middle: { file: "/sounds/Ds.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
         ring:   { file: "/sounds/B.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
-        pinky:  { file: "/sounds/G#.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+        pinky:  { file: "/sounds/Gs.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
     } 
     else if (kitName === "selamta") {
