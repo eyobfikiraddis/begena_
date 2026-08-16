@@ -34,17 +34,18 @@ html, body {
 }
 #helpButton {
   position: absolute;
-  bottom: 16px;
-  left: 16px;
-  width: 42px;
-  height: 42px;
+  bottom: 25px;
+  left: 40px;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   border: 1px solid #e8a13d00;
   background: rgba(20,20,20,0.85);
   color: #e8a13d;
-  font-size: 22px;
+  font-size: 60px;
   cursor: pointer;
-  z-index: 6;
+  caret-color: transparent;
+
 }
 
 #helpModal.hidden {
@@ -219,22 +220,22 @@ html, body {
   z-index: 10;
 }
 .Dropdown {
+  position:absolute;
+  top: 25px;
+  left: 25px;
   appearance: none;
   background: rgba(20, 20, 20, 0.75); 
   color: #e8a13d; 
   border: 1px solid #e8a13d;
   border-radius: 8px;
-  padding: 10px 40px 10px 16px;
-  font-size: 16px;
-  font-family: monospace;
+  padding: 10px 35px 10px 35px;
+  font-size: 25px;
   font-weight: bold;
   cursor: pointer;
   outline: none;
   backdrop-filter: blur(6px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   transition: all 0.2s ease-in-out;
-  margin-top: 30px;
-  margin-left: 30px;
 }
 
 .Dropdown:hover, .Dropdown:focus {

@@ -39,7 +39,7 @@ function isThumbExtended(landmarks, handedness) {
   
   if (!thumbTip || !pinkyBase) return false;
   const distance = getDistance(thumbTip, pinkyBase);
-  return distance > 0.12; 
+  return distance < 0.1; 
 }
 
 
@@ -283,7 +283,7 @@ async function main() {
           const hand = results.landmarks[0];
           const handedness = results.handedness[0][0].categoryName;
 
-          audioEngine.updateFingerState("thumb", !isThumbExtended(hand, handedness));
+          audioEngine.updateFingerState("thumb", isThumbExtended(hand, handedness));
           audioEngine.updateFingerState("index", isTouching(hand, 8, 6));   // Index Tip (8) to 2nd Joint (6)
           audioEngine.updateFingerState("middle", isTouching(hand, 12, 10)); // Middle Tip (12) to 2nd Joint (10)
           audioEngine.updateFingerState("ring", isTouching(hand, 16, 14));  // Ring Tip (16) to 2nd Joint (14)
@@ -299,7 +299,7 @@ async function main() {
       }
     } catch (error) {
       // If a math error happens, log it but DO NOT freeze the app
-      console.error("Frame skipped due to error:", error);
+      console.error("Dont worry frame skipped due to error:", error);
     }
 
     requestAnimationFrame(loop);
