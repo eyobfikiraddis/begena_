@@ -72,11 +72,28 @@ class MultiTriggerEngine {
     } 
     else if (kitName === "selamta") {
       this.voices = {
-        thumb:  { file: "/sounds/selamta/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
-        index:  { file: "/sounds/selamta/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
-        middle: { file: "/sounds/selamta/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
-        ring:   { file: "/sounds/selamta/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
-        pinky:  { file: "/sounds/selamta/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+        thumb:  { file: "/sounds/G.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/E.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/B.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/A.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+      };
+    }
+    else if (kitName === "tezeta") {
+      this.voices = {
+        thumb:  { file: "/sounds/Fs.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/E.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/B.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/A.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+      };
+    }else if (kitName === "ambasel") {
+      this.voices = {
+        thumb:  { file: "/sounds/G.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/Ds.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/As.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/A.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
     }
     else{
