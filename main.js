@@ -63,11 +63,11 @@ class MultiTriggerEngine {
   loadKit(kitName) {
     if (kitName === "silecherinetih") {
       this.voices = {
-        thumb:  { file: "/sounds/silecherneth/thumb.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
-        index:  { file: "/sounds/silecherneth/index.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
-        middle: { file: "/sounds/silecherneth/middle.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
-        ring:   { file: "/sounds/silecherneth/ring.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
-        pinky:  { file: "/sounds/silecherneth/pinky.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
+        thumb:  { file: "/sounds/G.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
+        index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
+        middle: { file: "/sounds/D#.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Middle" },
+        ring:   { file: "/sounds/B.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
+        pinky:  { file: "/sounds/G#.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
     } 
     else if (kitName === "selamta") {
