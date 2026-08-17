@@ -60,8 +60,8 @@ class MultiTriggerEngine {
     });
   }
 
-  loadKit(kitName) {
-    if (kitName === "silecherinetih") {
+  loadKit(kgntName) {
+    if (kgntName === "silecherinetih") {
       this.voices = {
         thumb:  { file: "/sounds/G.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
         index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
@@ -70,7 +70,7 @@ class MultiTriggerEngine {
         pinky:  { file: "/sounds/Gs.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
     } 
-    else if (kitName === "selamta") {
+    else if (kgntName === "selamta") {
       this.voices = {
         thumb:  { file: "/sounds/G.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
         index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
@@ -79,7 +79,7 @@ class MultiTriggerEngine {
         pinky:  { file: "/sounds/A.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
     }
-    else if (kitName === "tezeta") {
+    else if (kgntName === "tezeta") {
       this.voices = {
         thumb:  { file: "/sounds/Fs.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
         index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
@@ -87,7 +87,7 @@ class MultiTriggerEngine {
         ring:   { file: "/sounds/B.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Ring" },
         pinky:  { file: "/sounds/A.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Pinky" }
       };
-    }else if (kitName === "ambasel") {
+    }else if (kgntName === "ambasel") {
       this.voices = {
         thumb:  { file: "/sounds/G.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Thumb" },
         index:  { file: "/sounds/D.wav", buffer: null, source: null, active: false, lastTriggerTime: 0, name: "Index" },
@@ -134,7 +134,7 @@ class MultiTriggerEngine {
     const voice = this.voices[fingerKey];
     
     if (!voice.buffer) return; 
-    const COOLDOWN_MS = 250; 
+    const COOLDOWN_MS = 250; // ande simeta eyederebe slaschegere yetechemere new
     const now = performance.now();
 
     if (isTriggered && !voice.active) {
